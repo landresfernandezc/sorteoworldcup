@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html ng-app="userModule">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    <!-- Compiled and minified CSS -->
+    <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
+    <!-- Bootstrap Core Css -->
+    <link href="../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!-- Waves Effect Css -->
+    <link href="../plugins/node-waves/waves.css" rel="stylesheet" />
+
+    <!-- Preloader Css -->
+    <link href="../plugins/material-design-preloader/md-preloader.css" rel="stylesheet" />
+
+
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Custom Css -->
+    <link href="../assets/css/style.css" rel="stylesheet">
+
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+    <link href="../assets/css/themes/theme-blue.css" rel="stylesheet" />
+
+    <script src="../plugins/alertify/alertify.js"></script>
+    <link rel="stylesheet" type="text/css" href="../plugins/alertify/css/alertify.css">
+    <link rel="stylesheet" type="text/css" href="../plugins/alertify/css/themes/default.css">
+<body>
+<header>
+    <ul style="margin-left: 10%">
+        <li><a  href="#/seleccion">Realizar sorteo</a></li>
+        <li><a href="#/equipos">Gestionar equipos</a></li>
+        <li><a>Ver sorteos</a></li>
+    </ul>
+</header>
+<section  class="contenedorEquipos" ng-view>
+
+</section>
+
+<script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="../bower_components/angular-route/angular-route.min.js"></script>
+<script src="../app.js"></script>
+<script src="components/equipos/equiposServices.js"></script>
+<script src="components/equipos/equiposController.js"></script>
+<script src="components/sorteos/sorteosController.js"></script>
+<script src="components/sorteos/sorteosServices.js"></script>
+<script src="../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap Core Js -->
+<script src="../plugins/bootstrap/js/bootstrap.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- JQuery Steps Plugin Js -->
+
+<script src="../assets/js/pages/forms/form-wizard.js"></script>
+
+<!-- Waves Effect Plugin Js -->
+<script src="../plugins/node-waves/waves.js"></script>
+
+<!-- Custom Js -->
+<script src="../assets/js/admin.js"></script>
+
+<footer>
+    <p>copyright by Luis Andres Fernandez Calderon && Jurguen Romero</p>
+</footer>
+</body>
+</html>
