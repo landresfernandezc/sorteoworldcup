@@ -16,6 +16,9 @@ angular.module('userModule',['ngRoute'])
                     }).when("/repechajes",{
                             templateUrl:'components/sorteos/repechajes.html',
                             controller: 'sorteosController'
+                        }).when("/bombos",{
+                            templateUrl:'components/sorteos/bombos.html',
+                            controller: 'sorteosController'
                         })
 			        .otherwise({
 			            redirectTo: '/'

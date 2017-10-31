@@ -330,7 +330,7 @@ angular.module('userModule')
     }
     var listaIndices=[];//This list has the index of the teams of the UEFA
     //This function return if the list index has the number that receive
-    function existeEnIndices(num) {
+    function existeEnIndices(num){
         for(var x=0;x<listaIndices.length;x++){
             if(listaIndices[x]===num){
                 return true;
@@ -620,11 +620,13 @@ angular.module('userModule')
                 }
             }
             for(var x=0;x<$scope.partidos.length;x++){
-                if($scope.partidos[x].tl){
-                    $scope.listaClasificados.push($scope.partidos[x].local);
-                }
-                if($scope.partidos[x].tv){
-                    $scope.listaClasificados.push($scope.partidos[x].visitante);
+                if(x%2!=0){
+                    if($scope.partidos[x].glr){
+                        $scope.listaClasificados.push($scope.partidos[x].local);
+                    }
+                    if($scope.partidos[x].gvr){
+                        $scope.listaClasificados.push($scope.partidos[x].visitante);
+                    }
                 }
             }
             $scope.listaClasificados.push($scope.clasificacion[0].lista[0]);
@@ -641,7 +643,24 @@ angular.module('userModule')
                 }
             }
             $scope.listaClasificados=ordenarLista($scope.listaClasificados);
-            console.log($scope.listaClasificados);
+            //console.log($scope.listaClasificados);
+            var lista=[];
+            $scope.clasificacion=JSON.parse(localStorage.getItem("seleccionados"));
+            //console.log($scope.clasificacion);
+            for(var x=0;x<$scope.listaClasificados.length;x++){
+                if($scope.listaClasificados[x].nombre===$scope.clasificacion[0].lista[0]){
+                    lista.push($scope.listaClasificados[x]);
+                }
+            }
+            console.log(lista);
+            for(var x=0;x<$scope.listaClasificados.length;x++){
+                if($scope.listaClasificados[x].nombre!=$scope.clasificacion[0].lista[0]){
+                    lista.push($scope.listaClasificados[x]);
+                }
+            }
+            localStorage.setItem("clasificados",JSON.stringify(lista));
+
+
     }
     //This function determinate if the confederations are diferents
     $scope.determinarRepechaje=function determinarRepechaje(){
@@ -655,6 +674,100 @@ angular.module('userModule')
                 else{
                     alertify.error("Las confederaciones deben ser distintas");
                 }
+    }
+    //Decide if exist the item in one list that receive as parameter
+    function existeEnIndicesbombo(bombo,num){
+        for(var x=0;x<bombo.length;x++){
+            if(bombo[x]===num){
+                return true;
+            }
+        }
+        return false;
+    }
+    //This function charge the
+    function cargarBombos(){
+        $scope.listaClasificados=JSON.parse(localStorage.getItem("clasificados"));
+        $scope.bombo1=$scope.listaClasificados.slice(0,8);
+        $scope.bombo2=$scope.listaClasificados.slice(8,16);
+        $scope.bombo3=$scope.listaClasificados.slice(16,24);
+        $scope.bombo4=$scope.listaClasificados.slice(24,32);
+        console.log($scope.bombo1);
+        console.log($scope.bombo2);
+        console.log($scope.bombo3);
+        console.log($scope.bombo4);
+        var listaiBombo1=[];
+        var listaiBombo2=[];
+        var listaiBombo3=[];
+        var listaiBombo4=[];
+        while(listaiBombo1.length!=8){
+            var num=generaRandom(1,8);
+            if(existeEnIndicesbombo(listaiBombo1,num)){
+
+                }
+            else{
+                listaiBombo1.push(num);
+                }
+            }
+        while(listaiBombo2.length!=8){
+            var num=generaRandom(1,8);
+            if(existeEnIndicesbombo(listaiBombo2,num)){
+
+            }
+            else{
+                listaiBombo2.push(num);
+            }
+        }
+        while(listaiBombo3.length!=8){
+            var num=generaRandom(1,8);
+            if(existeEnIndicesbombo(listaiBombo3,num)){
+
+            }
+            else{
+                listaiBombo3.push(num);
+            }
+        }
+        while(listaiBombo4.length!=8){
+            var num=generaRandom(1,8);
+            if(existeEnIndicesbombo(listaiBombo4,num)){
+
+            }
+            else{
+                listaiBombo4.push(num);
+            }
+        }
+        var bombo1=[];
+        for(var x=0;x<listaiBombo1.length;x++){
+            bombo1.push($scope.bombo1[listaiBombo1[x]-1]);
+        }
+        var bombo2=[];
+        for(var x=0;x<listaiBombo2.length;x++){
+            bombo2.push($scope.bombo2[listaiBombo2[x]-1]);
+        }
+        var bombo3=[];
+        for(var x=0;x<listaiBombo3.length;x++){
+            bombo3.push($scope.bombo3[listaiBombo3[x]-1]);
+        }
+        var bombo4=[];
+        for(var x=0;x<listaiBombo4.length;x++){
+            bombo4.push($scope.bombo4[listaiBombo4[x]-1]);
+        }
+        console.log(bombo1);
+        console.log(bombo2);
+        console.log(bombo3);
+        console.log(bombo4);
+
+    }
+    //This function start the repechage
+    $scope.iniciarBombos=function iniciarBombos() {
+            $scope.listaClasificados=JSON.parse(localStorage.getItem("clasificados"));
+            if($scope.listaClasificados.length===32){
+                $location.path('bombos');
+                $route.reload();
+                cargarBombos();
+            }
+            else{
+                alertify.error("Debe generar la etapa de repechaje");
+            }
     }
 	$scope.putEquipo = function putEquipo(equipo){
 		$scope.equipo.nombre_confederacion=$scope.confederacion.datos.nombre;
