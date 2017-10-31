@@ -91,15 +91,31 @@ angular.module('userModule')
 		estado:"",
 		nombre_confederacion:""
 	};
-	$scope.getEquipos = function getEquipos(){
-        $("#categoria_equipos_s").val(localStorage.getItem("categoria"));
-        console.log(localStorage.getItem("categoria"));
-		OperationsSorteoteams.getTeams({categoria:localStorage.getItem("categoria")},function(res) {
+    //This function get all teams in the ranking
+	$scope.getTodosEquipos = function getEquipos(){
+		OperationsSorteoteams.getallTeams(function(res){
 			$scope.listaTeams = res;
-            console.log($scope.listaTeams);
-			$location.path('seleccion');
+			localStorage.setItem("listaTeams",JSON.stringify($scope.listaTeams));
 		});
 	};
+	function eliminarInactivos(lista){
+        for(var y=0;y<lista.length;y++){
+            if(lista[y].estado==="0"){
+                lista.splice(y,1);
+            }
+        }
+        return lista;
+    }
+    $scope.getEquipos = function getEquipos(){
+        $("#categoria_equipos_s").val(localStorage.getItem("categoria"));
+        console.log(localStorage.getItem("categoria"));
+        OperationsSorteoteams.getTeams({categoria:localStorage.getItem("categoria")},function(res) {
+            $scope.listaTeams = res;
+            $scope.listaTeams=eliminarInactivos($scope.listaTeams);
+            console.log($scope.listaTeams);
+            $location.path('seleccion');
+        });
+    };
 	//$scope.getEquipos();
     $("#categoria_equipos_s").change(function(){
         localStorage.setItem("categoria",$(this).val());
@@ -282,7 +298,7 @@ angular.module('userModule')
         return x;
     }
     $scope.equiposUEFA=[];
-    //This funcion generete the match of teams in confederations that nor be the UEFA
+    //This funcion generete the match of teams in confederations that not are in the UEFA
     function partidosNOUEFA(){
         for(var x=1;x<$scope.clasificacion.length;x++){
             if($scope.clasificacion[x].nombre===$scope.equipo1.nombre){
@@ -303,11 +319,14 @@ angular.module('userModule')
                 }
             }
         }
-        var partido1={local:$scope.equipo1.nombre,visitante:$scope.equipo2.nombre,gl:0,gv:0,tl:false,tv:false};
-        var partido2={local:$scope.equipo3.nombre,visitante:$scope.equipo4.nombre,gl:0,gv:0,tl:false,tv:false};
+        var partido1={local:$scope.equipo1.nombre,visitante:$scope.equipo2.nombre,gl:0,gv:0,tl:false,tv:false,e:false,glr:false,gvr:false};
+        var partido2={local:$scope.equipo1.nombre,visitante:$scope.equipo2.nombre,gl:0,gv:0,tl:false,tv:false,e:false,glr:false,gvr:false};
+        var partido3={local:$scope.equipo3.nombre,visitante:$scope.equipo4.nombre,gl:0,gv:0,tl:false,tv:false,e:false,glr:false,gvr:false};
+        var partido4={local:$scope.equipo3.nombre,visitante:$scope.equipo4.nombre,gl:0,gv:0,tl:false,tv:false,e:false,glr:false,gvr:false};
         $scope.partidos.push(partido1);
         $scope.partidos.push(partido2);
-
+        $scope.partidos.push(partido3);
+        $scope.partidos.push(partido4);
     }
     var listaIndices=[];//This list has the index of the teams of the UEFA
     //This function return if the list index has the number that receive
@@ -330,19 +349,34 @@ angular.module('userModule')
                     listaIndices.push(num);
                 }
             }
-            for(var y=0;y<listaIndices.length;y++) {
+            for(var y=0;y<listaIndices.length;y++){
                 if (y % 2 != 0) {
                     console.log(y);
                     console.log("l:"+listaIndices[y-1]+","+$scope.equiposUEFA[listaIndices[y-1]]+"v:"+listaIndices[y]+","+$scope.equiposUEFA[listaIndices[y]]);
-                    var partido = {
-                        local: $scope.equiposUEFA[listaIndices[y-1]-1],
-                        visitante: $scope.equiposUEFA[listaIndices[y]-1],
+                    var partido ={
+                        local:$scope.equiposUEFA[listaIndices[y]-1] ,
+                        visitante: $scope.equiposUEFA[listaIndices[y-1]-1],
                         gl: 0,
                         gv: 0,
                         tl: false,
-                        tv: false
+                        tv: false,
+                        e:false,
+                        glr:false,
+                        gvr:false
+                    };
+                    var partido1 ={
+                        local:$scope.equiposUEFA[listaIndices[y]-1] ,
+                        visitante: $scope.equiposUEFA[listaIndices[y-1]-1],
+                        gl: 0,
+                        gv: 0,
+                        tl: false,
+                        tv: false,
+                        e:false,
+                        glr:false,
+                        gvr:false
                     };
                     $scope.partidos.push(partido);
+                    $scope.partidos.push(partido1);
                 }
             }
             for(var x=0;x<$scope.partidos.length;x++){
@@ -350,20 +384,40 @@ angular.module('userModule')
                 $scope.partidos[x].gv=generaRandom(1,3);
             }
             for(var x=0;x<$scope.partidos.length;x++){
-                if($scope.partidos.gl>$scope.partidos.gv){
+                if($scope.partidos[x].gl>$scope.partidos[x].gv){
                     $scope.partidos[x].tl=true;
                 }
-                if($scope.partidos.gl<$scope.partidos.gv){
+                if($scope.partidos[x].gl<$scope.partidos[x].gv){
                     $scope.partidos[x].tv=true;
                 }
-                if($scope.partidos.gl===$scope.partidos.gv){
-                    var penales=generaRandom(1,2);
-                    if(penales===1){
-                        $scope.partidos[x].tl=true;
+                if($scope.partidos[x].gl===$scope.partidos[x].gv){
+                    $scope.partidos[x].e=true;
+                }
+            }
+            for(var x=0;x<$scope.partidos.length;x++){
+                if(x%2!=0){
+                    var golesLocal=$scope.partidos[x].gl+$scope.partidos[x-1].gl;
+                    var golesVisitante=$scope.partidos[x].gv+$scope.partidos[x-1].gv;
+                    if(golesLocal>golesVisitante){
+                        $scope.partidos[x].glr=true;
+                        $scope.partidos[x-1].glr=true;
                     }
-                    if(penales===2){
-                        $scope.partidos[x].tv=true;
+                    if(golesLocal<golesVisitante){
+                        $scope.partidos[x].gvr=true;
+                        $scope.partidos[x-1].gvr=true;
                     }
+                    if(golesLocal===golesVisitante){
+                        var penales=generaRandom(1,2);
+                        if(penales===1){
+                            $scope.partidos[x].glr=true;
+                            $scope.partidos[x-1].glr=true;
+                        }
+                        if(penales===2){
+                            $scope.partidos[x].gvr=true;
+                            $scope.partidos[x-1].gvr=true;
+                        }
+                    }
+
                 }
             }
             console.log($scope.partidos);
@@ -400,45 +454,118 @@ angular.module('userModule')
         $("#tableresultados").append(hilera);
         //Se encarga de cargar todas las filas a la tabla
         for (var i = 0; i < $scope.partidos.length; i++) {
-                var hilera = document.createElement("tr");
-                for (var j = 0; j < 5; j++){
-                    // Crea un elemento <td> y un nodo de texto, haz que el nodo de
-                    // texto sea el contenido de <td>, ubica el elemento <td> al final
-                    // de la hilera de la tabla
-                    var celda = document.createElement("td");
-                    if(j==0){
-                        var textoCelda = document.createTextNode($scope.partidos[i].local);
-                        celda.appendChild(textoCelda);
-                    }
-                    if(j==1){
-                        var textoCelda = document.createTextNode($scope.partidos[i].gl);
-                        celda.appendChild(textoCelda);
-                    }if(j==2){
-                        var textoCelda = document.createTextNode($scope.partidos[i].gv);
-                        celda.appendChild(textoCelda);
-                    }
-                    if(j==3){
-                        var textoCelda = document.createTextNode($scope.partidos[i].visitante);
-                        celda.appendChild(textoCelda);
-                    }
-                    if(j==4){
-                        if($scope.partidos[i].tl){
-                            var textoCelda = document.createTextNode("local");
+                if(i%2!=0){
+                    var hilera = document.createElement("tr");
+                    for (var j = 0; j < 5; j++){
+                        // Crea un elemento <td> y un nodo de texto, haz que el nodo de
+                        // texto sea el contenido de <td>, ubica el elemento <td> al final
+                        // de la hilera de la tabla
+                        var celda = document.createElement("td");
+                        if(j==0){
+                            var textoCelda = document.createTextNode($scope.partidos[i-1].local);
                             celda.appendChild(textoCelda);
                         }
-                        if($scope.partidos[i].tv){
-                            var textoCelda = document.createTextNode("visitante");
+                        if(j==1){
+                            var textoCelda = document.createTextNode($scope.partidos[i-1].gl);
+                            celda.appendChild(textoCelda);
+                        }if(j==2){
+                            var textoCelda = document.createTextNode($scope.partidos[i-1].gv);
                             celda.appendChild(textoCelda);
                         }
+                        if(j==3){
+                            var textoCelda = document.createTextNode($scope.partidos[i-1].visitante);
+                            celda.appendChild(textoCelda);
+                        }
+                        if(j==4){
+                            if($scope.partidos[i-1].tl){
+                                var textoCelda = document.createTextNode("local");
+                                celda.appendChild(textoCelda);
+                            }
+                            if($scope.partidos[i-1].tv){
+                                var textoCelda = document.createTextNode("visitante");
+                                celda.appendChild(textoCelda);
+                            }
+                            if($scope.partidos[i-1].e){
+                                var textoCelda = document.createTextNode("empate");
+                                celda.appendChild(textoCelda);
+                            }
+                        }
+                        hilera.appendChild(celda);
+
                     }
-                    hilera.appendChild(celda);
+                    $("#tableresultados").append(hilera);
+
+                    var hilera1 = document.createElement("tr");
+                    for (var j = 0; j < 5; j++){
+                        // Crea un elemento <td> y un nodo de texto, haz que el nodo de
+                        // texto sea el contenido de <td>, ubica el elemento <td> al final
+                        // de la hilera de la tabla
+                        var celda = document.createElement("td");
+                        if(j==0){
+                            var textoCelda = document.createTextNode($scope.partidos[i].visitante);
+                            celda.appendChild(textoCelda);
+                        }
+                        if(j==1){
+                            var textoCelda = document.createTextNode($scope.partidos[i].gv);
+                            celda.appendChild(textoCelda);
+                        }if(j==2){
+                            var textoCelda = document.createTextNode($scope.partidos[i].gl);
+                            celda.appendChild(textoCelda);
+                        }
+                        if(j==3){
+                            var textoCelda = document.createTextNode($scope.partidos[i].local);
+                            celda.appendChild(textoCelda);
+                        }
+                        if(j==4){
+                            if($scope.partidos[i].tl){
+                                var textoCelda = document.createTextNode("visitante");
+                                celda.appendChild(textoCelda);
+                            }
+                            if($scope.partidos[i].tv){
+                                var textoCelda = document.createTextNode("local");
+                                celda.appendChild(textoCelda);
+                            }
+                            if($scope.partidos[i].e){
+                                var textoCelda = document.createTextNode("empate");
+                                celda.appendChild(textoCelda);
+                            }
+                        }
+                        hilera1.appendChild(celda);
+                    }
+                    $("#tableresultados").append(hilera1);
+                    var hilera2 = document.createElement("tr");
+                    var celda1 = document.createElement("td");
+                    if($scope.partidos[i].glr){
+                        var textoCelda = document.createTextNode("El ganador del repechaje es fue:"+$scope.partidos[i].local);
+                        celda1.appendChild(textoCelda);
+                        hilera2.appendChild(celda1);
+                    }
+                    if($scope.partidos[i].gvr){
+                        var textoCelda = document.createTextNode("El ganador del repechaje es fue:"+$scope.partidos[i].visitante);
+                        celda1.appendChild(textoCelda);
+                        hilera2.appendChild(celda1);
+                    }
+                    $("#tableresultados").append(hilera2);
                 }
-            $("#tableresultados").append(hilera);
         }
+    }
+    //This function sort the list
+    function  ordenarLista(lista){
+            lista.sort(function (a,b) {
+                if (parseFloat(a.puntos) > parseFloat(b.puntos)){
+                    return -1;
+                }
+                if (parseFloat(a.puntos) < parseFloat(b.puntos)){
+                    return 1;
+                }
+                // a must be equal to b
+                return 0;
+            });
+            return lista;
     }
     $scope.listaClasificados=[];
     //This function define the teams that are classifieds to the world cups
-    function definirClasificados() {
+    function definirClasificados(){
             for(var x=1;x<$scope.clasificacion.length;x++){
                 for(var y=0;y<$scope.clasificacion[x].lista.length;y++){
                     $scope.listaClasificados.push($scope.clasificacion[x].lista[y]);
@@ -453,8 +580,22 @@ angular.module('userModule')
                 }
             }
             $scope.listaClasificados.push($scope.clasificacion[0].lista[0]);
-             console.log($scope.listaClasificados);
+            //console.log($scope.listaClasificados);
+            $scope.getTodosEquipos();
+            $scope.listaTeams=JSON.parse(localStorage.getItem("listaTeams"));
+            for(var x=0;x<$scope.listaTeams.length;x++){
+                //console.log($scope.listaTeams[x]);
+                for(var y=0;y<$scope.listaClasificados.length;y++){
+                    if($scope.listaTeams[x].nombre===$scope.listaClasificados[y]){
+                        //console.log("entro");
+                        $scope.listaClasificados[y]=$scope.listaTeams[x];
+                    }
+                }
+            }
+            $scope.listaClasificados=ordenarLista($scope.listaClasificados);
+            console.log($scope.listaClasificados);
     }
+    //This function determinate if the confederations are diferents
     $scope.determinarRepechaje=function determinarRepechaje(){
                 if(validarEnfrentamientos()){
                     $scope.clasificacion=JSON.parse(localStorage.getItem("seleccionados"));
@@ -498,7 +639,6 @@ angular.module('userModule')
 		$scope.equipo=equipo;
 		console.log("actualiza:");
 		console.log($scope.equipo);
-
 	}
     $scope.actualizarEquipoEstado=function actualizarEquipoEstado(equipo){
         $scope.equipo=equipo;

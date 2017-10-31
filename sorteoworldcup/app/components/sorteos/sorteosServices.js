@@ -15,6 +15,16 @@ angular.module('userModule')
                     }).error(function(data) {
                 });
             },
+            getallTeams: function(callback){
+                $http.get(
+                    urlp+"ObtenertodosEquiposMundial"
+                ).success(function successCallback(response){
+                    callback(response);
+                }).error(function errorCallback(response) {
+                    //En caso de fallo en la peticion entra en esta funcion
+                    callback(response);
+                });
+            },
             //Esta funcion se encarga de insertar un estudiante mediante la conexion con el servidor
             putTeams:function(equipo,callback){
                  $http({

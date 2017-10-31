@@ -53,6 +53,7 @@ header{
     position: fixed;
     background-image:url('../img/icon.png');
     background-repeat: no-repeat;
+    z-index: 1;
 }
 a:link{
     color:gray;
@@ -143,7 +144,7 @@ a:active{
 .contenedorEquipos{
     margin-top: 10%;
     margin-left: 30%;
-    margin-bottom: 1.5%;
+    margin-bottom: 5%;
     text-align: center;
     overflow:scroll;
     /*position: fixed;*/
