@@ -423,9 +423,23 @@ angular.module('userModule')
             console.log($scope.partidos);
 
     }
+    function buscarBandera(pais) {
+        $scope.getTodosEquipos();
+        $scope.listaTeams=JSON.parse(localStorage.getItem("listaTeams"));
+        for(var x=0;x<$scope.listaTeams.length;x++){
+            if($scope.listaTeams[x].nombre===pais){
+                return $scope.listaTeams[x].bandera;
+            }
+        }
+    }
     //This function generate the table with the summary of repechage
     function MostrarResulatdos() {
         var hilera = document.createElement("tr");
+
+        var celda = document.createElement("td");
+        var textoCelda = document.createTextNode("Bandera");
+        celda.appendChild(textoCelda);
+        hilera.appendChild(celda);
 
         var celda1 = document.createElement("td");
         var textoCelda1 = document.createTextNode("local");
@@ -446,6 +460,12 @@ angular.module('userModule')
         celda4.appendChild(textoCelda4);
         hilera.appendChild(celda4);
 
+        var celda7 = document.createElement("td");
+        var textoCelda7 = document.createTextNode("Bandera");
+        celda7.appendChild(textoCelda7);
+        hilera.appendChild(celda7);
+
+
         var celda5 = document.createElement("td");
         var textoCelda5 = document.createTextNode("Ganador");
         celda5.appendChild(textoCelda5);
@@ -456,27 +476,41 @@ angular.module('userModule')
         for (var i = 0; i < $scope.partidos.length; i++) {
                 if(i%2!=0){
                     var hilera = document.createElement("tr");
-                    for (var j = 0; j < 5; j++){
+                    for (var j = 0; j < 7; j++){
                         // Crea un elemento <td> y un nodo de texto, haz que el nodo de
                         // texto sea el contenido de <td>, ubica el elemento <td> al final
                         // de la hilera de la tabla
                         var celda = document.createElement("td");
                         if(j==0){
+                            var imgCelda =  document.createElement("img");
+                            imgCelda.src=buscarBandera($scope.partidos[i-1].local);
+                            imgCelda.width=75;
+                            imgCelda.height=50;
+                            celda.appendChild(imgCelda);
+                        }
+                        if(j==1){
                             var textoCelda = document.createTextNode($scope.partidos[i-1].local);
                             celda.appendChild(textoCelda);
                         }
-                        if(j==1){
+                        if(j==2){
                             var textoCelda = document.createTextNode($scope.partidos[i-1].gl);
                             celda.appendChild(textoCelda);
-                        }if(j==2){
+                        }if(j==3){
                             var textoCelda = document.createTextNode($scope.partidos[i-1].gv);
                             celda.appendChild(textoCelda);
                         }
-                        if(j==3){
+                        if(j==4){
                             var textoCelda = document.createTextNode($scope.partidos[i-1].visitante);
                             celda.appendChild(textoCelda);
                         }
-                        if(j==4){
+                        if(j==5){
+                            var imgCelda =  document.createElement("img");
+                            imgCelda.src=buscarBandera($scope.partidos[i-1].visitante);
+                            imgCelda.width=75;
+                            imgCelda.height=50;
+                            celda.appendChild(imgCelda);
+                        }
+                        if(j==6){
                             if($scope.partidos[i-1].tl){
                                 var textoCelda = document.createTextNode("local");
                                 celda.appendChild(textoCelda);
@@ -496,27 +530,41 @@ angular.module('userModule')
                     $("#tableresultados").append(hilera);
 
                     var hilera1 = document.createElement("tr");
-                    for (var j = 0; j < 5; j++){
+                    for (var j = 0; j < 7; j++){
                         // Crea un elemento <td> y un nodo de texto, haz que el nodo de
                         // texto sea el contenido de <td>, ubica el elemento <td> al final
                         // de la hilera de la tabla
                         var celda = document.createElement("td");
                         if(j==0){
+                            var imgCelda =  document.createElement("img");
+                            imgCelda.src=buscarBandera($scope.partidos[i].visitante);
+                            imgCelda.width=75;
+                            imgCelda.height=50;
+                            celda.appendChild(imgCelda);
+                        }
+                        if(j==1){
                             var textoCelda = document.createTextNode($scope.partidos[i].visitante);
                             celda.appendChild(textoCelda);
                         }
-                        if(j==1){
+                        if(j==2){
                             var textoCelda = document.createTextNode($scope.partidos[i].gv);
                             celda.appendChild(textoCelda);
-                        }if(j==2){
+                        }if(j==3){
                             var textoCelda = document.createTextNode($scope.partidos[i].gl);
                             celda.appendChild(textoCelda);
                         }
-                        if(j==3){
+                        if(j==4){
                             var textoCelda = document.createTextNode($scope.partidos[i].local);
                             celda.appendChild(textoCelda);
                         }
-                        if(j==4){
+                        if(j==5){
+                            var imgCelda =  document.createElement("img");
+                            imgCelda.src=buscarBandera($scope.partidos[i].local);
+                            imgCelda.width=75;
+                            imgCelda.height=50;
+                            celda.appendChild(imgCelda);
+                        }
+                        if(j==6){
                             if($scope.partidos[i].tl){
                                 var textoCelda = document.createTextNode("visitante");
                                 celda.appendChild(textoCelda);
@@ -536,12 +584,12 @@ angular.module('userModule')
                     var hilera2 = document.createElement("tr");
                     var celda1 = document.createElement("td");
                     if($scope.partidos[i].glr){
-                        var textoCelda = document.createTextNode("El ganador del repechaje es fue:"+$scope.partidos[i].local);
+                        var textoCelda = document.createTextNode("Pasa:"+$scope.partidos[i].local);
                         celda1.appendChild(textoCelda);
                         hilera2.appendChild(celda1);
                     }
                     if($scope.partidos[i].gvr){
-                        var textoCelda = document.createTextNode("El ganador del repechaje es fue:"+$scope.partidos[i].visitante);
+                        var textoCelda = document.createTextNode("Pasa:"+$scope.partidos[i].visitante);
                         celda1.appendChild(textoCelda);
                         hilera2.appendChild(celda1);
                     }
