@@ -59,7 +59,7 @@ angular.module('userModule')
 		OperationsTeams.putTeams($scope.equipo, function(response) {
 			if (response.success) {
 			    $location.path('equipos');
-			    $route.reload();
+                $route.reload();
 			}
 		});
 	};
