@@ -1,7 +1,7 @@
 'use strict'
 angular.module('userModule')
     .factory('OperationsTeams',function($http,$location){
-        var urlp="http://localhost:8080/sorteoworldcup/server/equipos/CRUDequipos.php?Funcion=";
+        var urlp="http://localhost/sorteoworldcup/server/equipos/CRUDequipos.php?Funcion=";
         var respuesta={
             getTeams: function(equipo,callback){
                 $http({

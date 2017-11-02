@@ -1,7 +1,7 @@
 'use strict'
 angular.module('userModule')
 .controller('mainController',function($scope,$location,$route,$http){
-    var urlp="http://localhost:8080/sorteoworldcup/server/usuarios/CRUDusuarios.php?Funcion=";
+    var urlp="http://localhost/sorteoworldcup/server/usuarios/CRUDusuarios.php?Funcion=";
     $scope.usuario={
         nombre:"",
         apellido1:"",

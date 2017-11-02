@@ -12,13 +12,13 @@ angular.module('userModule',['ngRoute'])
                                              })
                     .when("/seleccion",{
                         templateUrl:'components/sorteos/seleccion.html',
-                        controller: 'sorteosController'
+                        controller: 'seleccionController'
                     }).when("/repechajes",{
                             templateUrl:'components/sorteos/repechajes.html',
-                            controller: 'sorteosController'
+                            controller: 'repechajesController'
                         }).when("/bombos",{
                             templateUrl:'components/sorteos/bombos.html',
-                            controller: 'sorteosController'
+                            controller: 'bombosController'
                         })
 			        .otherwise({
 			            redirectTo: '/'
