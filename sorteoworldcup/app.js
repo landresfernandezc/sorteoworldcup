@@ -1,3 +1,4 @@
+//Here are the routes of the front end, the ngRoute charge one controller a one view
 angular.module('userModule',['ngRoute'])
 .config(['$routeProvider',function($routeProvider)
     {

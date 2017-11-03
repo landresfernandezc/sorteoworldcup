@@ -1,11 +1,13 @@
 'use strict'
 angular.module('userModule')
 .controller('equiposController',function($scope,OperationsTeams,$location,$route){
-	//alertify.success("Ingreso exitoso");
+	//list of teams in the world cup
 	$scope.listaTeams = [];
+	//Temporal variable
 	$scope.confederacion={
 		datos:""
 	};
+	//List of confederations
     $scope.confederaciones=[
         {
         	id:1,
@@ -32,6 +34,7 @@ angular.module('userModule')
             nombre:"CAF"
         }
     ];
+    //Object of a team
 	$scope.equipo ={
 		nombre:"",
 		puntos:"",
@@ -39,7 +42,7 @@ angular.module('userModule')
 		estado:"",
 		nombre_confederacion:""
 	};
-    console.log("entro al controller");
+	//This function go to the service and get ths list of teams to category
 	$scope.getEquipos = function getEquipos() {
         $("#categoria_equipos").val(localStorage.getItem("categoria"));
         console.log(localStorage.getItem("categoria"));
@@ -49,11 +52,14 @@ angular.module('userModule')
 			$location.path('equipos');
 		});
 	};
+	//This function in JQuery detect when the select has a change
     $("#categoria_equipos").change(function(){
         localStorage.setItem("categoria",$(this).val());
         $scope.getEquipos();
     });
+    //Call to the function that get the teams
 	$scope.getEquipos();
+	//This function go to the service and put a team in the database since a end point
 	$scope.putEquipo = function putEquipo(equipo){
 		$scope.equipo.nombre_confederacion=$scope.confederacion.datos.nombre;
 		OperationsTeams.putTeams($scope.equipo, function(response) {
@@ -63,6 +69,7 @@ angular.module('userModule')
 			}
 		});
 	};
+	//This function go to the service that go to the end point in the server and delete a team
 	$scope.delete=function deleteEquipos(nombre){
 		OperationsTeams.deleteTeams($scope.equipo.nombre,function(response){
 				if(response.success){

@@ -17,7 +17,7 @@ angular.module('userModule')
         $scope.grupof=[];
         $scope.grupog=[];
         $scope.grupoh=[];
-
+        //This function get the lots
         $scope.getSorteos = function getSorteos(){
             OperationsSorteoteams.getDraws(function(res){
                 $scope.listaSorteos = res;
@@ -54,6 +54,7 @@ angular.module('userModule')
                 }
             }
         }
+        //This function show the information of a lot
         $scope.verInfo=function verInfo(id){
             OperationsSorteoteams.getTable({id:id},function(res){
                 $scope.listaGrupos = res;

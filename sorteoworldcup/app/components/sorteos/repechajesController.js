@@ -5,12 +5,12 @@
 'use strict'
 angular.module('userModule')
     .controller('repechajesController',function($scope,OperationsSorteoteams,$location,$route){
-        $scope.listaTeams = [];
-        $scope.bandera=true;
+        $scope.listaTeams = [];//List of teams
+        $scope.bandera=true;//Flag
         $scope.confederacion={
             datos:""
         };
-        $scope.confederaciones=[
+        $scope.confederaciones=[//This is the list of confederations
             {
                 id:1,
                 nombre:"CONCACAF"
@@ -36,7 +36,7 @@ angular.module('userModule')
                 nombre:"CAF"
             }
         ];
-        $scope.clasificacion=[
+        $scope.clasificacion=[//List of teams that are classifieds
             {
                 repechaje:0,
                 directos:1,
@@ -87,7 +87,7 @@ angular.module('userModule')
                 listar:[]
             }
         ]
-
+        //This is the object that represent a team
         $scope.equipo ={
             nombre:"",
             puntos:"",
@@ -263,6 +263,7 @@ angular.module('userModule')
             console.log($scope.partidos);
 
         }
+        //This function search the flag that is of each team
         function buscarBandera(pais){
             $scope.getTodosEquipos();
             $scope.listaTeams=JSON.parse(localStorage.getItem("listaTeams"));
@@ -469,23 +470,18 @@ angular.module('userModule')
                 }
             }
             $scope.listaClasificados.push($scope.clasificacion[0].lista[0]);
-            //console.log($scope.listaClasificados);
             $scope.getTodosEquipos();
             $scope.listaTeams=JSON.parse(localStorage.getItem("listaTeams"));
             for(var x=0;x<$scope.listaTeams.length;x++){
-                //console.log($scope.listaTeams[x]);
                 for(var y=0;y<$scope.listaClasificados.length;y++){
                     if($scope.listaTeams[x].nombre===$scope.listaClasificados[y]){
-                        //console.log("entro");
                         $scope.listaClasificados[y]=$scope.listaTeams[x];
                     }
                 }
             }
             $scope.listaClasificados=ordenarLista($scope.listaClasificados);
-            //console.log($scope.listaClasificados);
             var lista=[];
             $scope.clasificacion=JSON.parse(localStorage.getItem("seleccionados"));
-            //console.log($scope.clasificacion);
             for(var x=0;x<$scope.listaClasificados.length;x++){
                 if($scope.listaClasificados[x].nombre===$scope.clasificacion[0].lista[0]){
                     lista.push($scope.listaClasificados[x]);
@@ -512,6 +508,7 @@ angular.module('userModule')
                 alertify.error("Las confederaciones deben ser distintas");
             }
         }
+        //This function compare if a element is host in the world cup
         function  esAnfitrion(nombre){
             var lista=JSON.parse(localStorage.getItem("seleccionados"));
             if(lista[0].lista[0]===nombre){

@@ -95,6 +95,7 @@ angular.module('userModule')
             estado:"",
             nombre_confederacion:""
         };
+        // This function delete items that are disabled
         function eliminarInactivos(lista){
             for(var y=0;y<lista.length;y++){
                 if(lista[y].estado==="0"){
@@ -103,6 +104,7 @@ angular.module('userModule')
             }
             return lista;
         }
+        //Get the teams that are of a confederation
         $scope.getEquipos = function getEquipos(){
             $("#categoria_equipos_s").val(localStorage.getItem("categoria"));
             console.log(localStorage.getItem("categoria"));
@@ -113,13 +115,13 @@ angular.module('userModule')
                 $location.path('seleccion');
             });
         };
+        //This function detect a change in the select of confederations
         $("#categoria_equipos_s").change(function(){
             localStorage.setItem("categoria",$(this).val());
             $scope.getEquipos();
         });
+        //This function compare if a element exist in the list that receive
         function existe(nombre,confederacion){
-            console.log(nombre);
-            console.log(confederacion);
             for(var x=0;x<7;x++){
                 if(x===0){
                     if($scope.clasificacion[x].lista.length>0){
@@ -146,6 +148,7 @@ angular.module('userModule')
             }
             return false;
         }
+        //This function delete a element in the classification
         function borrarClasificacion(nombre,confederacion){
             for(var x=0;x<7;x++){
                 if(x===0){
@@ -174,6 +177,7 @@ angular.module('userModule')
                 }
             }
         }
+        //This function search if exist element that go of chance direct to the world cup in the confederation tha receive for parameter
         function  existenpasesDirectos(confederacion){
             for(var x=0;x<7;x++){
                 if($scope.clasificacion[x].nombre===confederacion){
@@ -187,6 +191,7 @@ angular.module('userModule')
                 }
             }
         }
+        //This function compare if the list have other opportunities of classification
         function  existenpasesRepechaje(confederacion){
             for(var x=0;x<7;x++){
                 if($scope.clasificacion[x].nombre===confederacion){
@@ -197,6 +202,7 @@ angular.module('userModule')
             }
             return false;
         }
+        //Compare if exist cups
         function seagotaronCupos(){
             for(var x=0;x<7;x++){
                 if($scope.clasificacion[x].directos>0 || $scope.clasificacion[x].repechaje>0){
@@ -205,6 +211,7 @@ angular.module('userModule')
             }
             return true;
         }
+        //Add element that are classify
         function agregarClasificados(nombre,confederacion){
             if($scope.clasificacion[0].lista.length===0){
                 alertify.success("El anfitrion se eligio con exito");
@@ -239,6 +246,7 @@ angular.module('userModule')
                 alertify.success("Ya selecciono todos los equipos del mundial"+"\n"+"para la "+confederacion);
             }
         }
+        //Compare if the element are select
         $scope.seleccionado=function seleccionado(nombre,confederacion){
             if(existe(nombre,confederacion)){
                 borrarClasificacion(nombre,confederacion);
@@ -248,6 +256,7 @@ angular.module('userModule')
                 agregarClasificados(nombre,confederacion);
             }
         }
+        //Start the second chance to classify
         $scope.iniciarRepechaje=function iniciarRepechaje(){
             if(seagotaronCupos()){
             localStorage.setItem("seleccionados",JSON.stringify($scope.clasificacion));

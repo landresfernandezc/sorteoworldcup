@@ -14,12 +14,13 @@ angular.module('userModule')
         nombre_usuario:"",
         clave:""
     }
+    //This function send to  the server with the information of the user
     $scope.validaUsuario=function(datos_usuario){
         $http({
             method  :'POST',
             url     : urlp+"ObtenertodosUsuarios",
             data    : datos_usuario
-        })// si la insercion fue exitosa entra al succes de lo contrario retorna un error departe del servidor
+        })
             .then(function mySuccess(response) {
                 if(response.data.success){
                     sessionStorage.setItem("usuario",datos_usuario.nombre_usuario);
@@ -33,6 +34,7 @@ angular.module('userModule')
                 alertify.error("Revise su conexion a Internet");
             });
      }
+     //Function that register one user in the system
      $scope.registrarUsuario=function(usuario){
          var fechaActualget = new Date();
          var year=fechaActualget.getFullYear();
@@ -42,14 +44,12 @@ angular.module('userModule')
          var minutes=fechaActualget.getMinutes();
          var seconds=fechaActualget.getSeconds();
          var fecha_actual=year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
-         //var fecha_actual = new Date(year, month, day, hours, minutes, seconds, milliseconds);
          usuario.fecha=fecha_actual;
-         alert(fecha_actual);
          $http({
              method  :'POST',
              url     : urlp+"putUsuarios",
              data    : usuario
-         })// si la insercion fue exitosa entra al succes de lo contrario retorna un error departe del servidor
+         })
              .then(function mySuccess(response) {
                  alertify.success("Se registro con exito");
              }, function myError(response) {

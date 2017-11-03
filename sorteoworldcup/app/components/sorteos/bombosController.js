@@ -1,19 +1,20 @@
 /**
  * Created by Andres on 11/2/2017.
  */
-var bandera_bombo1=true;
-var bandera_bombo2=false;
-var bandera_bombo3=false;
-var bandera_bombo4=false;
-var contador=0;
-var grupoa=[];
-var grupob=[];
-var grupoc=[];
-var grupod=[];
-var grupoe=[];
-var grupof=[];
-var grupog=[];
-var grupoh=[];
+var bandera_bombo1=true;//This is a flag to know if the drum one is active
+var bandera_bombo2=false;//This is a flag to know if the drum two is active
+var bandera_bombo3=false;//This is a flag to know if the drum three is active
+var bandera_bombo4=false;//This is a flag to know if the drum fourth is active
+var contador=0;//This function count the sequence in the creation of the drum
+var grupoa=[];//This list represent the drum a in the world cup
+var grupob=[];//This list represent the drum b in the world cup
+var grupoc=[];//This list represent the drum c in the world cup
+var grupod=[];//This list represent the drum d in the world cup
+var grupoe=[];//This list represent the drum e in the world cup
+var grupof=[];//This list represent the drum f in the world cup
+var grupog=[];//This list represent the drum g in the world cup
+var grupoh=[];//This list represent the drum h in the world cup
+//This function search if exist one element in a drum
 function existeBombo(nombre,lista){
     for(var x=0;x<lista.length;x++){
         if(lista[x].nombre===nombre){
@@ -22,6 +23,7 @@ function existeBombo(nombre,lista){
     }
     return false;
 }
+//This function compare if a element is host
 function  esAnfitrion(nombre){
     var lista=JSON.parse(localStorage.getItem("seleccionados"));
     if(lista[0].lista[0]===nombre){
@@ -112,6 +114,7 @@ function  pintarGrupos(nombre){
         document.getElementById(nombre).className = "elegido";
     }
 }
+//This function compare if a element is in any drum
 function yaSalio(nombre){
     for(var x=0;x<grupoa.length;x++){
         if(grupoa[x]===nombre){
@@ -155,6 +158,7 @@ function yaSalio(nombre){
     }
     return false;
 }
+//This function add in one drum
 function Agregar(nombre){
     var  listabombo1=JSON.parse(localStorage.getItem("bombo1"));
     var  listabombo2=JSON.parse(localStorage.getItem("bombo2"));
@@ -555,15 +559,17 @@ function Agregar(nombre){
         }
     }
 }
+//This is the controller of drums
 'use strict'
 angular.module('userModule')
     .controller('bombosController',function($scope,OperationsSorteoteams,$location,$route){
+        //List of teams
         $scope.listaTeams = [];
-        $scope.bandera=true;
+        $scope.bandera=true;//Flag
         $scope.confederacion={
             datos:""
         };
-        $scope.confederaciones=[
+        $scope.confederaciones=[//This is the list of confederations
             {
                 id:1,
                 nombre:"CONCACAF"
@@ -589,7 +595,7 @@ angular.module('userModule')
                 nombre:"CAF"
             }
         ];
-        $scope.clasificacion=[
+        $scope.clasificacion=[//List of teams that are classifieds
             {
                 repechaje:0,
                 directos:1,
@@ -640,9 +646,7 @@ angular.module('userModule')
                 listar:[]
             }
         ]
-
-
-        $scope.equipo ={
+        $scope.equipo ={ //The object a team
             nombre:"",
             puntos:"",
             bandera:"",
@@ -680,6 +684,7 @@ angular.module('userModule')
                 }
             }
         }
+        //This function compare if the element that receive is host in the world cup
         function  esAnfitrion(nombre){
             var lista=JSON.parse(localStorage.getItem("seleccionados"));
             if(lista[0].lista[0]===nombre){
@@ -696,9 +701,6 @@ angular.module('userModule')
             var hilera = document.createElement("tr");
             var celda = document.createElement("td");
             for (var j = 0; j < 4; j++){
-                // Crea un elemento <td> y un nodo de texto, haz que el nodo de
-                // texto sea el contenido de <td>, ubica el elemento <td> al final
-                // de la hilera de la tabla
                 var btn = document.createElement("BUTTON");        // Create a <button> element
                 var idBtn = document.createAttribute("id");       // Create a "class" attribute
                 idBtn.value =lista[j].nombre;
@@ -723,9 +725,6 @@ angular.module('userModule')
             var hilera1 = document.createElement("tr");
             var celda1 = document.createElement("td");
             for (var j = 4; j < 8; j++){
-                // Crea un elemento <td> y un nodo de texto, haz que el nodo de
-                // texto sea el contenido de <td>, ubica el elemento <td> al final
-                // de la hilera de la tabla
                 var btn = document.createElement("BUTTON");        // Create a <button> element
                 var idBtn = document.createAttribute("id");       // Create a "class" attribute
                 idBtn.value =lista[j].nombre;
@@ -750,9 +749,6 @@ angular.module('userModule')
             var hilera = document.createElement("tr");
             var celda = document.createElement("td");
             for (var j = 0; j < 4; j++){
-                // Crea un elemento <td> y un nodo de texto, haz que el nodo de
-                // texto sea el contenido de <td>, ubica el elemento <td> al final
-                // de la hilera de la tabla
                 var btn = document.createElement("BUTTON");        // Create a <button> element
                 var idBtn = document.createAttribute("id");       // Create a "class" attribute
                 idBtn.value =lista[j].nombre;
@@ -768,9 +764,6 @@ angular.module('userModule')
             var hilera1 = document.createElement("tr");
             var celda1 = document.createElement("td");
             for (var j = 4; j < 8; j++){
-                // Crea un elemento <td> y un nodo de texto, haz que el nodo de
-                // texto sea el contenido de <td>, ubica el elemento <td> al final
-                // de la hilera de la tabla
                 var btn = document.createElement("BUTTON");        // Create a <button> element
                 var idBtn = document.createAttribute("id");       // Create a "class" attribute
                 idBtn.value =lista[j].nombre;
@@ -789,9 +782,6 @@ angular.module('userModule')
             var hilera = document.createElement("tr");
             var celda = document.createElement("td");
             for (var j = 0; j < 4; j++){
-                // Crea un elemento <td> y un nodo de texto, haz que el nodo de
-                // texto sea el contenido de <td>, ubica el elemento <td> al final
-                // de la hilera de la tabla
                 var btn = document.createElement("BUTTON");        // Create a <button> element
                 var idBtn = document.createAttribute("id");       // Create a "class" attribute
                 idBtn.value =lista[j].nombre;
@@ -807,9 +797,6 @@ angular.module('userModule')
             var hilera1 = document.createElement("tr");
             var celda1 = document.createElement("td");
             for (var j = 4; j < 8; j++){
-                // Crea un elemento <td> y un nodo de texto, haz que el nodo de
-                // texto sea el contenido de <td>, ubica el elemento <td> al final
-                // de la hilera de la tabla
                 var btn = document.createElement("BUTTON");        // Create a <button> element
                 var idBtn = document.createAttribute("id");       // Create a "class" attribute
                 idBtn.value =lista[j].nombre;
@@ -823,8 +810,8 @@ angular.module('userModule')
             }
             $("#bombot").append(hilera1);
         }
+        //This function insert the data of the list in one table with the id that receive
         function cargarTablabombo4(lista){
-            //Se encarga de cargar todas las filas a la tabla
             var hilera = document.createElement("tr");
             var celda = document.createElement("td");
             for (var j = 0; j < 4; j++){
@@ -871,10 +858,9 @@ angular.module('userModule')
             }
             return false;
         }
-        //This function charge the
+        //This function charge the drums
         $scope.cargarBombos=function cargarBombos(){
             if($scope.bandera===true){
-
                 $scope.listaClasificados=JSON.parse(localStorage.getItem("clasificados"));
                 $scope.bombo1=$scope.listaClasificados.slice(0,8);
                 $scope.bombo2=$scope.listaClasificados.slice(8,16);
@@ -958,6 +944,7 @@ angular.module('userModule')
                 alertify("El bombo ya fue cargado");
             }
         }
+        //This function save the lot
         $scope.guardarSorteo=function guardarSorteo(){
             var resultado=JSON.parse(localStorage.getItem("resultado"));
             OperationsSorteoteams.putDraws(resultado, function(response) {
