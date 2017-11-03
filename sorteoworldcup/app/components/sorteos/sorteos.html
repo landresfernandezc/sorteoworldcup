@@ -1,0 +1,83 @@
+<table style="border: solid 2px black" >
+    <thead>
+    <th style="border: solid 2px black">Nombre del creador</th>
+    <th style="border: solid 2px black">Fecha de creacion</th>
+    <th style="border: solid 2px black">Ver</th>
+    </thead>
+    <tbody>
+    <tr ng-repeat="sorteo in listaSorteos"  style="border: solid 2px black" >
+        <td  style="border: solid 2px black">{{sorteo.nombre_usuario}}</td>
+        <td  style="border: solid 2px black">{{sorteo.fecha}}</td>
+        <td  style="border: solid 2px black">
+            <button data-toggle="modal" data-target="#show" ng-click="verInfo(sorteo.id_sorteos)">Ver grupos</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div class="modal fade" role="dialog" id="show">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="location.reload()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align" id="Headin">Tabla de grupos</h4>
+            </div>
+            <div class="modal-body" >
+
+                <section style="float: left;display: inline-block">
+                    <table  style="border: solid 2px black;float:left;display: inline-block" id="gruoa">
+                        <td style="border: solid 2px black">Grupo A</td>
+                        <tr style="border: solid 2px black" ng-repeat="equipo in grupoa">
+                            <td style="border: solid 2px black">{{equipo.nombre_equipo}}</td>
+                        </tr>
+                    </table>
+                    <table style="border: solid 2px black;float:left;display: inline-block" id="grupb">
+                        <td style="border: solid 2px black">Grupo B</td>
+                        <tr style="border: solid 2px black" ng-repeat="equipo in grupob">
+                            <td style="border: solid 2px black">{{equipo.nombre_equipo}}</td>
+                        </tr>
+                    </table>
+                    <table style="border: solid 2px black;float:left;display: inline-block"id="grupc">
+                        <td style="border: solid 2px black">Grupo C</td>
+                        <tr style="border: solid 2px black" ng-repeat="equipo in grupoc">
+                            <td style="border: solid 2px black">{{equipo.nombre_equipo}}</td>
+                        </tr>
+                    </table>
+                    <table style="border: solid 2px black;float:left;display: inline-block" id="grupd">
+                        <td style="border: solid 2px black">Grupo D</td>
+                        <tr style="border: solid 2px black"ng-repeat="equipo in grupod">
+                            <td style="border: solid 2px black">{{equipo.nombre_equipo}}</td>
+                        </tr>
+                    </table>
+                    <table  style="border: solid 2px black;float:left;display: inline-block" id="grupe">
+                        <td style="border: solid 2px black">Grupo E</td>
+                        <tr style="border: solid 2px black"ng-repeat="equipo in grupoe">
+                            <td style="border: solid 2px black">{{equipo.nombre_equipo}}</td>
+                        </tr>
+                    </table>
+                    <table style="border: solid 2px black;float:left;display: inline-block" id="grupf">
+                        <td style="border: solid 2px black">Grupo F</td>
+                        <tr style="border: solid 2px black" ng-repeat="equipo in grupof">
+                            <td style="border: solid 2px black">{{equipo.nombre_equipo}}</td>
+                        </tr>
+                    </table>
+                    <table style="border: solid 2px black;float:left;display: inline-block"id="grupg">
+                        <td style="border: solid 2px black">Grupo G</td>
+                        <tr style="border: solid 2px black"ng-repeat="equipo in grupog">
+                            <td style="border: solid 2px black">{{equipo.nombre_equipo}}</td>
+                        </tr>
+                    </table>
+                    <table style="border: solid 2px black;float:left;display: inline-block" id="gruph">
+                        <td  style="border: solid 2px black">Grupo H</td>
+                        <tr  style="border: solid 2px black"ng-repeat="equipo in grupoh">
+                            <td  style="border: solid 2px black">{{equipo.nombre_equipo}}</td>
+                        </tr>
+                    </table>
+                </section>
+            </div>
+            <div class="modal-footer ">
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+</div>

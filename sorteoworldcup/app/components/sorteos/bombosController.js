@@ -30,7 +30,6 @@ function  esAnfitrion(nombre){
     else{
         return false;
     }
-
 }
 //This function draw the groups
 function  pintarGrupos(nombre){
@@ -504,6 +503,52 @@ function Agregar(nombre){
                     bandera_bombo2=false;
                     bandera_bombo3=false;
                     bandera_bombo4=false;
+                    var fechaActualget = new Date();
+                    var year=fechaActualget.getFullYear();
+                    var month=fechaActualget.getMonth()+1;
+                    var day=fechaActualget.getDate();
+                    var hours=fechaActualget.getHours();
+                    var minutes=fechaActualget.getMinutes();
+                    var seconds=fechaActualget.getSeconds();
+                    var fecha_actual=year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
+                    var resultado ={
+                        nombre_usuario:sessionStorage.getItem("usuario"),
+                        fecha:fecha_actual,
+                        au:grupoa[0],
+                        ad:grupoa[1],
+                        at:grupoa[2],
+                        ac:grupoa[3],
+                        bu:grupob[0],
+                        bd:grupob[1],
+                        bt:grupob[2],
+                        bc:grupob[3],
+                        cu:grupoc[0],
+                        cd:grupoc[1],
+                        ct:grupoc[2],
+                        cc:grupoc[3],
+                        du:grupod[0],
+                        dd:grupod[1],
+                        dt:grupod[2],
+                        dc:grupod[3],
+                        eu:grupoe[0],
+                        ed:grupoe[1],
+                        et:grupoe[2],
+                        ec:grupoe[3],
+                        fu:grupof[0],
+                        fd:grupof[1],
+                        ft:grupof[2],
+                        fc:grupof[3],
+                        gu:grupog[0],
+                        gd:grupog[1],
+                        gt:grupog[2],
+                        gc:grupog[3],
+                        hu:grupoh[0],
+                        hd:grupoh[1],
+                        ht:grupoh[2],
+                        hc:grupoh[3]
+                    }
+                    console.log(resultado);
+                    localStorage.setItem("resultado",JSON.stringify(resultado));
                     alertify.success("Genero el sorteo del mundial con exito "+"\n"+"presione guardar el sorteo")
                 }
             }
@@ -912,5 +957,13 @@ angular.module('userModule')
             else{
                 alertify("El bombo ya fue cargado");
             }
+        }
+        $scope.guardarSorteo=function guardarSorteo(){
+            var resultado=JSON.parse(localStorage.getItem("resultado"));
+            OperationsSorteoteams.putDraws(resultado, function(response) {
+                if (response.success) {
+                    alertify.success("El sorteo se guardo con exito");
+                }
+            });
         }
     });

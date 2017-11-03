@@ -16,10 +16,18 @@ angular.module('userModule',['ngRoute'])
                     }).when("/repechajes",{
                             templateUrl:'components/sorteos/repechajes.html',
                             controller: 'repechajesController'
-                        }).when("/bombos",{
+                    }).when("/bombos",{
                             templateUrl:'components/sorteos/bombos.html',
                             controller: 'bombosController'
-                        })
+                    })
+                    .when("/sorteos",{
+                        templateUrl:'components/sorteos/sorteos.html',
+                        controller: 'sorteosController'
+                    })
+                    .when("/grupos",{
+                        templateUrl:'components/sorteos/sorteos.html',
+                        controller: 'sorteosController'
+                    })
 			        .otherwise({
 			            redirectTo: '/'
 			        });

@@ -56,9 +56,6 @@ LANGUAGE plpgsql;
 
 
 
-
-
-
 -----------------------------------------------Modificando equipos-----------------------------------
 
 /*Modificando bandera y puntos*/
@@ -121,7 +118,9 @@ INSERT INTO confederaciones values ('CONCACAF');
 INSERT INTO confederaciones values ('CONMEBOL');
 INSERT INTO confederaciones values ('OFC');
 
-SELECT * FROM sorteos
+SELECT insertar_equipo('Nueva Zelanda','256.47','//img.fifa.com/images/flags/4/nzl.png','1','OFC'); 
+SELECT insertar_equipo('Taiti','181','//img.fifa.com/images/flags/4/tah.png','1','OFC');
+SELECT insertar_equipo('Islas Salomon','173.19','//img.fifa.com/images/flags/4/sol.png','1','OFC');
 
 
 
@@ -205,17 +204,6 @@ END $BODY$
 LANGUAGE plpgsql;
 
 
-
-SELECT * FROM equipos
-
-
-SELECT insertar_sorteo('landresf12','11-10-2017 00:00:00','Alemania','Inglaterra','Gales','Polonia','Argentina','Chile','Suiza','Francia','Croacia','Uruguay','Costa Rica','Islandia','Dinamarca','Suecia','Egipto','Escocia','Ucrania','Senegal','Bulgaria','Paraguay','Austria','Nigeria','Grecia','Rumanía','Panamá','Venezuela','Bolivia','Hungría','Jamaica','Noruega','Rusia','Guinea')
-
-
-
-
-
-SELECT * from posiciones_equipo
 
 
 

@@ -36,10 +36,15 @@
     <link rel="stylesheet" type="text/css" href="../plugins/alertify/css/themes/default.css">
 <body>
 <header>
+    <p style="float: left;margin-left: 5%;color: black" id="username_p"></p>
+    <script type="text/javascript">
+        var usuario=sessionStorage.getItem("usuario");
+        document.getElementById("username_p").innerHTML=usuario;
+    </script>
     <ul style="margin-left: 10%">
         <li><a  href="#/seleccion">Realizar sorteo</a></li>
         <li><a href="#/equipos">Gestionar equipos</a></li>
-        <li><a>Ver sorteos</a></li>
+        <li><a href="#/sorteos">Ver sorteos</a></li>
     </ul>
 </header>
 <section  class="contenedorEquipos" ng-view>
@@ -54,6 +59,7 @@
 <script src="components/sorteos/seleccionController.js"></script>
 <script src="components/sorteos/repechajesController.js"></script>
 <script src="components/sorteos/bombosController.js"></script>
+<script src="components/sorteos/sorteosController.js"></script>
 <script src="components/sorteos/sorteosServices.js"></script>
 <!-- JQuery Steps Plugin Js -->
 

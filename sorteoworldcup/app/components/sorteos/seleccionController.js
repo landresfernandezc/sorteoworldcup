@@ -249,13 +249,13 @@ angular.module('userModule')
             }
         }
         $scope.iniciarRepechaje=function iniciarRepechaje(){
-            //if(seagotaronCupos()){
+            if(seagotaronCupos()){
             localStorage.setItem("seleccionados",JSON.stringify($scope.clasificacion));
             $location.path('repechajes');
             $route.reload();
-            //}
-            //else{
-            //	alertify.error("Debe seleccionar todos los paises que pasan"+"\n"+"tanto al mundial como a repechaje");
-            //}
+            }
+            else{
+            	alertify.error("Debe seleccionar todos los paises que pasan"+"\n"+"tanto al mundial como a repechaje");
+            }
         }
     });
